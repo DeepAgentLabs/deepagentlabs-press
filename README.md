@@ -15,24 +15,43 @@ python3 -m http.server 8000 --directory dist
 
 Open http://localhost:8000.
 
-## CI and hosting
+## GitHub Actions CI/CD
 
-GitHub Actions runs **Website CI / Validate and build** on pushes to `main`
-and pull requests targeting `main`. It validates local asset references,
-page anchors, basic accessibility metadata, and the SVG icon, then uploads
-only the public files as the `website` artifact.
+`.github/workflows/ci.yml` validates and builds the website on pushes to
+`main`, pull requests targeting `main`, and manual runs. The build checks
+local assets, page anchors, accessibility metadata, and the SVG icon. It
+uploads only the three public website files as the `website` artifact.
 
-The same build command can be used on Render:
+Production deployment uses GitHub Pages and runs only after a successful
+build on `main`. Pull requests never deploy production. Deployment needs
+no additional secret: it uses the scoped GitHub Actions token and OIDC.
 
-- Repository: `DeepAgentLabs/deepagentlabs-press` (private)
-- Branch: `main`
-- Build command: `python3 scripts/build.py`
-- Publish directory: `dist`
-- Custom domain: `press.deepagentlabs.io`
+## Hosting activation (pending)
 
-Hosting setup is pending workspace selection and repository access. Once
-created, configure Render's auto-deploy setting to **After CI Checks Pass**
-to deploy successful `main` commits. Pull requests run CI without deploying
-production. The repository remains private while published website assets
-are public. DNS must point to the hostname provided by Render before the
-custom domain can serve the site over HTTPS.
+GitHub rejected Pages creation because the organization is on GitHub Free
+and this repository is private. Keep the repository private unless its
+owner explicitly authorizes a visibility change. GitHub Team supports
+Pages for private organization repositories; the published site is public.
+
+After the plan or authorized visibility change is complete:
+
+1. Enable GitHub Pages with **GitHub Actions** as the publishing source.
+2. In repository Settings > Pages, save `press.deepagentlabs.io` as the custom domain.
+3. Add the DNS record below.
+4. Set the repository Actions variable `PAGES_ENABLED` to `true`.
+5. Run **Website CI/CD** on `main` (or push a commit).
+6. After DNS verification and certificate issuance, enable **Enforce HTTPS**.
+
+Deployment is deliberately disabled until `PAGES_ENABLED` is set, so CI
+continues to pass while Pages is unavailable. No hosting service has been
+created outside GitHub.
+
+## DNS (apply after the custom domain is saved in Pages)
+
+| Type | Host | Target |
+| --- | --- | --- |
+| CNAME | `press` | `deepagentlabs.github.io` |
+
+Use the organization hostname as the CNAME target, without a repository
+path. GitHub Actions publishing uses the Pages custom-domain setting;
+it does not require a tracked `CNAME` file.

@@ -1,4 +1,4 @@
-name: Website CI
+name: Website CI/CD
 
 on:
   push:
@@ -29,3 +29,30 @@ jobs:
           name: website
           path: dist/
           if-no-files-found: error
+      - name: Upload GitHub Pages artifact
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request' && vars.PAGES_ENABLED == 'true'
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: dist/
+
+  deploy:
+    name: Deploy to GitHub Pages
+    needs: build
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request' && vars.PAGES_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    concurrency:
+      group: github-pages
+      cancel-in-progress: false
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+      - name: Deploy validated website
+        id: deployment
+        uses: actions/deploy-pages@v4
