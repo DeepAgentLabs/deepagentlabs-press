@@ -13,6 +13,7 @@ main { flex: 1; padding: clamp(48px, 9vh, 110px) 0 72px; }
 .status { color: #8d2b17; background: #ffe5de; border: 1px solid #f4b5a4; padding: 7px 12px; border-radius: 30px; font-size: 14px; }
 h1 { font-size: clamp(52px, 8.6vw, 116px); line-height: 1.04; letter-spacing: -.065em; font-weight: 600; margin: 35px 0 42px; }
 h1 span { color: #747474; }
+.ellipsis { display: inline-block; font-size: .45em; letter-spacing: .05em; }
 .details { display: flex; justify-content: space-between; gap: 40px; max-width: 1000px; border-top: 1px solid #cacaca; padding-top: 28px; }
 p { max-width: 440px; font-size: clamp(18px, 2vw, 22px); line-height: 1.55; margin: 0; color: #484848; }
 .destination { display: flex; flex-direction: column; gap: 12px; font-size: 18px; }
