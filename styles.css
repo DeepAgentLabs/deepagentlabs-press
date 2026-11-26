@@ -1,0 +1,33 @@
+* { box-sizing: border-box; }
+:root { color-scheme: light; font-family: Arial, Helvetica, sans-serif; color: #111; background: #fafafa; }
+body { margin: 0; }
+a { color: inherit; }
+.page { max-width: 1440px; min-height: 100svh; margin: auto; padding: 0 clamp(24px, 6vw, 88px); display: flex; flex-direction: column; }
+header { display: flex; justify-content: space-between; align-items: center; padding: 30px 0; border-bottom: 1px solid #cacaca; }
+.wordmark { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; font-size: 20px; font-weight: 700; letter-spacing: -.6px; }
+.brand-mark { background: #111; color: white; width: 38px; height: 38px; display: grid; place-content: center; position: relative; font-size: 27px; border-radius: 4px; }
+.brand-mark span { position: absolute; right: 3px; bottom: 0; color: #ff704d; font-size: 22px; }
+main { flex: 1; padding: clamp(48px, 9vh, 110px) 0 72px; }
+.intro { display: flex; gap: 20px; align-items: center; }
+.eyebrow { font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.6px; }
+.status { color: #8d2b17; background: #ffe5de; border: 1px solid #f4b5a4; padding: 7px 12px; border-radius: 30px; font-size: 14px; }
+h1 { font-size: clamp(52px, 8.6vw, 116px); line-height: 1.04; letter-spacing: -.065em; font-weight: 600; margin: 35px 0 42px; }
+h1 span { color: #747474; }
+.details { display: flex; justify-content: space-between; gap: 40px; max-width: 1000px; border-top: 1px solid #cacaca; padding-top: 28px; }
+p { max-width: 440px; font-size: clamp(18px, 2vw, 22px); line-height: 1.55; margin: 0; color: #484848; }
+.destination { display: flex; flex-direction: column; gap: 12px; font-size: 18px; }
+.destination .eyebrow { color: #555; }
+.visit { display: inline-block; margin-top: 32px; padding: 15px 22px; background: #111; color: #fff; font-size: 16px; font-weight: 600; text-decoration: none; border: 1px solid #111; border-radius: 3px; }
+.visit:hover { background: #383838; }
+a:focus-visible { outline: 3px solid #b9381b; outline-offset: 5px; }
+footer { border-top: 1px solid #cacaca; padding: 24px 0; display: flex; justify-content: space-between; gap: 20px; font-size: 14px; color: #555; }
+.skip-link { position: absolute; left: 24px; top: -100px; padding: 12px; background: #111; color: white; z-index: 1; }
+.skip-link:focus { top: 12px; }
+@media (max-width: 640px) {
+header { padding: 22px 0; }
+.wordmark { font-size: 18px; }
+.intro { flex-wrap: wrap; gap: 12px; }
+.details { flex-direction: column; gap: 28px; }
+h1 { margin: 30px 0; }
+footer { flex-direction: column; gap: 10px; }
+}
