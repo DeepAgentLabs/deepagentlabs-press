@@ -26,27 +26,21 @@ Production deployment uses GitHub Pages and runs only after a successful
 build on `main`. Pull requests never deploy production. Deployment needs
 no additional secret: it uses the scoped GitHub Actions token and OIDC.
 
-## Hosting activation (pending)
+## GitHub Pages hosting
 
-GitHub rejected Pages creation because the organization is on GitHub Free
-and this repository is private. Keep the repository private unless its
-owner explicitly authorizes a visibility change. GitHub Team supports
-Pages for private organization repositories; the published site is public.
+The repository is public and GitHub Pages is configured to deploy with
+GitHub Actions. The custom domain is set to `press.deepagentlabs.io` and
+the repository Actions variable `PAGES_ENABLED` is `true`.
 
-After the plan or authorized visibility change is complete:
+Every push to `main` validates, builds, and deploys the website. Pull
+requests validate and build without deploying production. The deploy job
+uses the `github-pages` environment and waits for the build to succeed.
 
-1. Enable GitHub Pages with **GitHub Actions** as the publishing source.
-2. In repository Settings > Pages, save `press.deepagentlabs.io` as the custom domain.
-3. Add the DNS record below.
-4. Set the repository Actions variable `PAGES_ENABLED` to `true`.
-5. Run **Website CI/CD** on `main` (or push a commit).
-6. After DNS verification and certificate issuance, enable **Enforce HTTPS**.
+DNS configuration is the remaining owner action. After DNS verification
+and certificate issuance, enable **Enforce HTTPS** in Settings > Pages.
+No hosting service has been created outside GitHub.
 
-Deployment is deliberately disabled until `PAGES_ENABLED` is set, so CI
-continues to pass while Pages is unavailable. No hosting service has been
-created outside GitHub.
-
-## DNS (apply after the custom domain is saved in Pages)
+## DNS
 
 | Type | Host | Target |
 | --- | --- | --- |
