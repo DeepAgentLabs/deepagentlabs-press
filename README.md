@@ -1,28 +1,38 @@
 # DeepAgentLabs Press
 
-A basic, responsive coming-soon website for **DeepAgentLabs Press**.
+A responsive coming-soon website for **DeepAgentLabs Press**.
 
-**Planned address:** https://press.deepagentlabs.io  
-**Status:** Upcoming. Hosting and DNS have not been configured by this project.
+**Planned address:** https://press.deepagentlabs.io
 
 ## Preview locally
 
-No build step or dependencies are required. From this directory run:
+No dependencies or package installation are required:
 
 ```sh
-python3 -m http.server 8000
+python3 scripts/build.py
+python3 -m http.server 8000 --directory dist
 ```
 
 Open http://localhost:8000.
 
-## Files
+## CI and hosting
 
-- `index.html`: page content and metadata
-- `styles.css`: responsive layout and styling
-- `favicon.svg`: site icon
+GitHub Actions runs **Website CI / Validate and build** on pushes to `main`
+and pull requests targeting `main`. It validates local asset references,
+page anchors, basic accessibility metadata, and the SVG icon, then uploads
+only the public files as the `website` artifact.
 
-## Publish when ready
+The same build command can be used on Render:
 
-Upload these three files together to any static website host. Set the custom domain to
-`press.deepagentlabs.io`, configure the DNS records supplied by the host, and enable HTTPS.
-Keep the GitHub repository private. This project does not enable GitHub Pages or change DNS.
+- Repository: `DeepAgentLabs/deepagentlabs-press` (private)
+- Branch: `main`
+- Build command: `python3 scripts/build.py`
+- Publish directory: `dist`
+- Custom domain: `press.deepagentlabs.io`
+
+Hosting setup is pending workspace selection and repository access. Once
+created, configure Render's auto-deploy setting to **After CI Checks Pass**
+to deploy successful `main` commits. Pull requests run CI without deploying
+production. The repository remains private while published website assets
+are public. DNS must point to the hostname provided by Render before the
+custom domain can serve the site over HTTPS.
